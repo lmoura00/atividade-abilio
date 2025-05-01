@@ -1,10 +1,13 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { AuthProvider } from './src/context/profile-context';
 import { Routes } from './src/routes';
 
 export default function App() {
-  return (
-      <Routes/>
-  );
+    return (
+        <AuthProvider>
+            <StatusBar style="auto" />
+            <Routes />
+        </AuthProvider>
+    );
 }
-

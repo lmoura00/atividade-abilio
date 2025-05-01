@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, TextInput, Button, Alert, StyleSheet, ActivityIndicator } from 'react-native';
 import { useAuth } from '../hooks/use-profile';
 
 export function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const { login } = useAuth();
+    const [username, setUsername] = useState('emilys');
+    const [password, setPassword] = useState('emilyspass');
+    const { login, isLoading, error, token } = useAuth();
 
     const handleLogin = async () => {
+        console.log('Attempting login...');
         try {
-            await login(username, password);
+            const result = await login(username, password);
+            console.log('Login successful!', {
+                storedToken: token, // Isso ainda pode ser null devido à natureza assíncrona
+                returnedToken: result.token // Use o token retornado pela função login
+            });
         } catch (error) {
-            Alert.alert('Erro', 'Credenciais inválidas');
+            console.error('Login error in component:', error);
         }
     };
+
+    // Adicione este useEffect para monitorar mudanças no token
+    useEffect(() => {
+        console.log('Token updated in Login component:', token);
+    }, [token]);
+
 
     return (
         <View style={styles.container}>
@@ -30,7 +41,25 @@ export function Login() {
                 value={password}
                 onChangeText={setPassword}
             />
-            <Button title="Entrar" onPress={handleLogin} />
+            
+            {isLoading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                    <Text style={styles.loadingText}>Carregando...</Text>
+                </View>
+            ) : (
+                <Button 
+                    title="Entrar" 
+                    onPress={handleLogin} 
+                    disabled={isLoading}
+                />
+            )}
+            
+            {error && (
+                <Text style={styles.error}>
+                    {error}
+                </Text>
+            )}
         </View>
     );
 }
@@ -47,5 +76,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
+    },
+    error: {
+        color: 'red',
+        marginTop: 10,
+        textAlign: 'center',
+    },
+    loadingContainer: {
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    loadingText: {
+        marginTop: 8,
     },
 });
