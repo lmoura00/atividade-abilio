@@ -1,8 +1,9 @@
-import {useContext} from 'react';
-import { ProfileContext } from '../context/profile-context';
+import { useContext } from 'react';
+import { AuthContext } from '../context/profile-context';
 
-export function useProfile() {
-    const context = useContext(ProfileContext);
+export function useAuth() {
+    const context = useContext(AuthContext);
 
+    
     return context;
 }

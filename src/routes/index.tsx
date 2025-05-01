@@ -1,19 +1,15 @@
-import {NavigationContainer} from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native';
 import { AuthRoutes } from './auth-routes';
 import { PublicRoutes } from './public-routes';
-import { useProfile } from '../hooks/use-profile';
-import { useState } from 'react';
-
+import { useAuth } from '../hooks/use-profile';
+import React from 'react';
 
 export function Routes() {
-    const [token, setToken] = useState(null);
+    const { token } = useAuth();
+    
     return (
         <NavigationContainer>
-            {token ? (
-                <AuthRoutes />
-            ) : (
-                <PublicRoutes />
-            )}
+            {token ? <AuthRoutes /> : <PublicRoutes />}
         </NavigationContainer>
     );
 }
