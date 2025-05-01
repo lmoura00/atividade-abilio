@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useCart } from '../context/cart-context';
 import { Product } from '../types';
+import Constants from 'expo-constants';
 
 export function CartScreen() {
     const { 
@@ -138,6 +139,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f8f9fa',
         padding: 16,
+        marginTop: Constants.statusBarHeight,
+        paddingBottom: 16,
     },
     header: {
         fontSize: 24,

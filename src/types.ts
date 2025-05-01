@@ -1,4 +1,7 @@
 export type Product = {
+    returnPolicy: any;
+    shippingInformation: any;
+    tags: boolean;
     id: number;
     title: string;
     price: number;

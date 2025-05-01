@@ -15,7 +15,7 @@ import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useCart } from '../context/cart-context';
 import { Product } from '../types';
-
+import Constants from 'expo-constants';
 const { width } = Dimensions.get('window');
 
 export function ProductDetail() {
@@ -50,7 +50,7 @@ export function ProductDetail() {
                     style={styles.image} 
                     resizeMode="contain"
                 />
-                {product.discountPercentage > 0 && (
+                {product.discountPercentage && product.discountPercentage > 0 && (
                     <View style={styles.discountBadge}>
                         <Text style={styles.discountText}>
                             -{product.discountPercentage}% OFF
@@ -183,6 +183,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f8f9fa',
+        marginTop: Constants.statusBarHeight,
+        paddingBottom: 20,
+        paddingHorizontal: 16,
     },
     imageContainer: {
         width: '100%',

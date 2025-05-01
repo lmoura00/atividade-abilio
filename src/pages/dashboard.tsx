@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useCart } from '../context/cart-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Product } from '../types';
-
+import Constants from 'expo-constants';
 const ProductItem = ({ product, onAddToCart }: { product: Product, onAddToCart: () => void }) => {
     const navigation = useNavigation();
     
@@ -28,7 +28,7 @@ const ProductItem = ({ product, onAddToCart }: { product: Product, onAddToCart: 
         >
             <View style={styles.imageContainer}>
                 <Image source={{ uri: product.thumbnail }} style={styles.image} />
-                {product.discountPercentage > 0 && (
+                {product.discountPercentage && product.discountPercentage > 0 && (
                     <View style={styles.discountBadge}>
                         <Text style={styles.discountText}>-{product.discountPercentage}%</Text>
                     </View>
@@ -40,15 +40,15 @@ const ProductItem = ({ product, onAddToCart }: { product: Product, onAddToCart: 
                 
                 <View style={styles.priceContainer}>
                     <Text style={styles.price}>${product.price.toFixed(2)}</Text>
-                    {product.discountPercentage > 0 && (
+                    {(product.discountPercentage ?? 0) > 0 && (
                         <Text style={styles.originalPrice}>
-                            ${(product.price / (1 - product.discountPercentage/100)).toFixed(2)}
+                            ${(product.price / (1 - (product.discountPercentage ?? 0) / 100)).toFixed(2)}
                         </Text>
                     )}
                 </View>
                 
                 <View style={styles.ratingContainer}>
-                    <Text style={styles.rating}>⭐ {product.rating.toFixed(1)}</Text>
+                    <Text style={styles.rating}>⭐ {(product.rating ?? 0).toFixed(1)}</Text>
                 </View>
             </View>
             
@@ -71,7 +71,7 @@ const CartIcon = ({ totalItems }: { totalItems: number }) => {
     return (
         <TouchableOpacity 
             style={styles.cartIconContainer}
-            onPress={() => navigation.navigate('Cart')}
+            onPress={() => navigation.navigate('CartScreen')}
         >
             <Icon name="shopping-cart" size={24} color="#6200ee" />
             {totalItems > 0 && (
@@ -142,14 +142,14 @@ export function Dashboard() {
         
         if (selectedCategory) {
             result = result.filter(product => 
-                product.category.toLowerCase() === selectedCategory.toLowerCase()
+                (product.category ?? '').toLowerCase() === selectedCategory.toLowerCase()
             );
         }
         
         if (searchQuery) {
             result = result.filter(product =>
                 product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                product.brand.toLowerCase().includes(searchQuery.toLowerCase())
+                (product.brand ?? '').toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
         
@@ -248,6 +248,7 @@ export function Dashboard() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: Constants.statusBarHeight,
         padding: 16,
         backgroundColor: '#f8f9fa',
     },
