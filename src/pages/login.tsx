@@ -45,7 +45,7 @@ export function Login() {
             {isLoading ? (
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color="#0000ff" />
-                    <Text style={styles.loadingText}>Carregando...</Text>
+                    
                 </View>
             ) : (
                 <Button 
@@ -55,11 +55,7 @@ export function Login() {
                 />
             )}
             
-            {error && (
-                <Text style={styles.error}>
-                    {error}
-                </Text>
-            )}
+            
         </View>
     );
 }
