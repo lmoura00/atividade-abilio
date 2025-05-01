@@ -54,11 +54,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${accessToken}`;
-
-        // Adicione este log para ver o token que está sendo definido
-        console.log("Token being set:", accessToken);
-
-        // Retorne os dados para que o componente Login possa usá-los
         return { user: userData, token: accessToken };
       } else {
         throw new Error("No access token received");
