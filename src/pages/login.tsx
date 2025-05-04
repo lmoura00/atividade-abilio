@@ -12,15 +12,14 @@ export function Login() {
         try {
             const result = await login(username, password);
             console.log('Login successful!', {
-                storedToken: token, // Isso ainda pode ser null devido à natureza assíncrona
-                returnedToken: result.token // Use o token retornado pela função login
+                storedToken: token, 
+                returnedToken: result.token 
             });
         } catch (error) {
             console.error('Login error in component:', error);
         }
     };
 
-    // Adicione este useEffect para monitorar mudanças no token
     useEffect(() => {
         console.log('Token updated in Login component:', token);
     }, [token]);

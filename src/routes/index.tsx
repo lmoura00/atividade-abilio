@@ -7,12 +7,6 @@ import React = require('react');
 
 export function Routes() {
     const { token } = useAuth();
-    const [isReady, setIsReady] = useState(false);
-
-    // Adicione este useEffect para debug
-    useEffect(() => {
-        console.log('Token changed:', token);
-    }, [token]);
 
     return (
         <NavigationContainer>

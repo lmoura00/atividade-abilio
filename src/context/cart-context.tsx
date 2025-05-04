@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Product } from '../types';
 
-// Defina o tipo com todas as propriedades obrigatórias
 type CartContextType = {
     cart: Product[];
     addToCart: (product: Product) => void;
@@ -12,7 +11,6 @@ type CartContextType = {
     totalPrice: number;
 };
 
-// Crie um valor padrão para o contexto
 const defaultCartContext: CartContextType = {
     cart: [],
     addToCart: () => {},
@@ -23,7 +21,6 @@ const defaultCartContext: CartContextType = {
     totalPrice: 0
 };
 
-// Passe o valor padrão como argumento para createContext
 const CartContext = createContext<CartContextType>(defaultCartContext);
 
 export const CartProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
@@ -83,5 +80,4 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({ children }
     );
 };
 
-// Agora não precisamos mais verificar se o contexto é undefined
 export const useCart = () => useContext(CartContext);
